@@ -1,15 +1,22 @@
 package webAutomation.webTests;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import webAutomation.pageObjects.WebFunctions;
+import webAutomation.reports.ExtentReport;
 import webAutomation.webUtilities.WebUtilities;
 
 public class AdactinHotelTests {
 
 
     WebUtilities webUtilities = new WebUtilities();
+    WebFunctions functions = new WebFunctions();
+    ExtentReport report = new ExtentReport();
+    ExtentReports reports;
 
 
     String sUrl, sBrowser;
@@ -23,13 +30,20 @@ public class AdactinHotelTests {
         sBrowser = Browser;
 
         webUtilities.setWebDriver(webUtilities.initializeWebDriver(sBrowser));
+        reports = report.initilizeExtentReporters("src/reports/report.html");
     }
 
     @Test
     public void runTests(){
 
+
+        ExtentTest test = reports.createTest("Adaction Hotel Automation Framework").assignAuthor("Tshifhiwa Sinugo");
+        ExtentTest node = test.createNode("Adaction Hotel").assignAuthor("Tshifhiwa Sinugo");
+
+
         try{
             webUtilities.navigate(sUrl);
+            functions.logIn(webUtilities.getWebDriver(), "user0115", "1234567890", node);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -39,6 +53,7 @@ public class AdactinHotelTests {
     public void tearDown() throws InterruptedException {
 
         Thread.sleep(3000);
+        reports.flush();
         webUtilities.getWebDriver().close();
         webUtilities.getWebDriver().quit();
     }
