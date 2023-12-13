@@ -8,6 +8,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import webAutomation.pageObjects.WebFunctions;
 import webAutomation.reports.ExtentReport;
+import webAutomation.webUtilities.DataProviders;
 import webAutomation.webUtilities.WebUtilities;
 
 public class AdactinHotelTests {
@@ -33,8 +34,8 @@ public class AdactinHotelTests {
         reports = report.initilizeExtentReporters("src/reports/report.html");
     }
 
-    @Test
-    public void runTests(){
+    @Test(dataProvider = "Credentials", dataProviderClass = DataProviders.class)
+    public void runTests(String Username, String Password){
 
 
         ExtentTest test = reports.createTest("Adaction Hotel Automation Framework").assignAuthor("Tshifhiwa Sinugo");
@@ -43,7 +44,7 @@ public class AdactinHotelTests {
 
         try{
             webUtilities.navigate(sUrl);
-            functions.logIn(webUtilities.getWebDriver(), "user0115", "1234567890", node);
+            functions.logIn(webUtilities.getWebDriver(), Username, Password, node);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
