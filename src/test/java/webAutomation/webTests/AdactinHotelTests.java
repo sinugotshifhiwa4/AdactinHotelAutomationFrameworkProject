@@ -38,8 +38,8 @@ public class AdactinHotelTests {
     public void testLogIn(String Username, String Password){
 
 
-        ExtentTest test = reports.createTest("Login").assignAuthor("Tshifhiwa Sinugo");
-        ExtentTest node = test.createNode("Validate login was successful").assignAuthor("Tshifhiwa Sinugo");
+        ExtentTest test = reports.createTest("Login").assignAuthor("Tshifhiwa");
+        ExtentTest node = test.createNode("Validate login was successful");
 
         try{
             webUtilities.navigate(sUrl);
@@ -52,8 +52,8 @@ public class AdactinHotelTests {
     @Test(priority = 2, dataProvider = "SearchHotelData", dataProviderClass = DataProviders.class)
     public void testSearchHotel(String Location, String Hotels, String RoomType, String NumberOfRooms, String CheckInDate, String CheckOutDate, String AdultPerRoom, String ChildrenPerRoom){
 
-        ExtentTest test = reports.createTest("Search Hotel").assignAuthor("Tshifhiwa Sinugo");
-        ExtentTest node = test.createNode("Validate select hotel is displayed").assignAuthor("Tshifhiwa Sinugo");
+        ExtentTest test = reports.createTest("Search Hotel").assignAuthor("Tshifhiwa");
+        ExtentTest node = test.createNode("Validate select hotel is displayed");
 
         try{
             functions.searchHotel(webUtilities.getWebDriver(),
@@ -69,6 +69,22 @@ public class AdactinHotelTests {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Test(priority = 3)
+    public void testSelectHotel(){
+
+        ExtentTest test = reports.createTest("Select Hotel").assignAuthor("Tshifhiwa");
+        ExtentTest node = test.createNode("Validate hotel is selected successfully");
+
+        try{
+
+            functions.selectHotel(webUtilities.getWebDriver(), node);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @AfterClass

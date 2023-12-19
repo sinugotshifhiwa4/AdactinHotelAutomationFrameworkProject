@@ -7,6 +7,7 @@ import org.testng.Assert;
 import webAutomation.reports.ExtentReport;
 import webAutomation.webPageObjects.LoginPage;
 import webAutomation.webPageObjects.SearchHotelPage;
+import webAutomation.webPageObjects.SelectHotelPage;
 import webAutomation.webUtilities.WebActions;
 
 import java.text.ParseException;
@@ -77,5 +78,32 @@ public class WebFunctions extends WebActions {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void selectHotel(WebDriver driver, ExtentTest node){
+
+        SelectHotelPage selectHotelPage = new SelectHotelPage(driver);
+
+        try{
+
+            clickObjects(selectHotelPage.selectHotelRadioBtn, driver);
+            clickObjects(selectHotelPage.continueBtn, driver);
+
+            Thread.sleep(2000);
+
+            String filename = report.CaptureScreenShot(driver);
+
+            //Validation
+            if (selectHotelPage.bookHotelTitle.isDisplayed()) {
+                node.pass("Select Hotel was Successful", MediaEntityBuilder.createScreenCaptureFromBase64String(filename).build());
+            } else {
+                node.fail("Select Hotel was Unsuccessful", MediaEntityBuilder.createScreenCaptureFromBase64String(filename).build());
+                Assert.fail("Select Hotel was Unsuccessful");
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
