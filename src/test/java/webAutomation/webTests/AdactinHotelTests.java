@@ -34,17 +34,38 @@ public class AdactinHotelTests {
         reports = report.initilizeExtentReporters("src/reports/report.html");
     }
 
-    @Test(dataProvider = "Credentials", dataProviderClass = DataProviders.class)
-    public void runTests(String Username, String Password){
+    @Test(priority = 1, dataProvider = "Credentials", dataProviderClass = DataProviders.class)
+    public void testLogIn(String Username, String Password){
 
 
-        ExtentTest test = reports.createTest("Adaction Hotel Automation Framework").assignAuthor("Tshifhiwa Sinugo");
-        ExtentTest node = test.createNode("Adaction Hotel").assignAuthor("Tshifhiwa Sinugo");
-
+        ExtentTest test = reports.createTest("Login").assignAuthor("Tshifhiwa Sinugo");
+        ExtentTest node = test.createNode("Validate login was successful").assignAuthor("Tshifhiwa Sinugo");
 
         try{
             webUtilities.navigate(sUrl);
             functions.logIn(webUtilities.getWebDriver(), Username, Password, node);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test(priority = 2, dataProvider = "SearchHotelData", dataProviderClass = DataProviders.class)
+    public void testSearchHotel(String Location, String Hotels, String RoomType, String NumberOfRooms, String CheckInDate, String CheckOutDate, String AdultPerRoom, String ChildrenPerRoom){
+
+        ExtentTest test = reports.createTest("Search Hotel").assignAuthor("Tshifhiwa Sinugo");
+        ExtentTest node = test.createNode("Validate select hotel is displayed").assignAuthor("Tshifhiwa Sinugo");
+
+        try{
+            functions.searchHotel(webUtilities.getWebDriver(),
+                    Location,
+                    Hotels,
+                    RoomType,
+                    NumberOfRooms,
+                    CheckInDate,
+                    CheckOutDate,
+                    AdultPerRoom,
+                    ChildrenPerRoom,
+                    node);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
