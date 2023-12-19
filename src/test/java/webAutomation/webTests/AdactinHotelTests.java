@@ -50,7 +50,8 @@ public class AdactinHotelTests {
     }
 
     @Test(priority = 2, dataProvider = "SearchHotelData", dataProviderClass = DataProviders.class)
-    public void testSearchHotel(String Location, String Hotels, String RoomType, String NumberOfRooms, String CheckInDate, String CheckOutDate, String AdultPerRoom, String ChildrenPerRoom){
+    public void testSearchHotel(String Location, String Hotels, String RoomType, String NumberOfRooms, String CheckInDate,
+                                String CheckOutDate, String AdultPerRoom, String ChildrenPerRoom){
 
         ExtentTest test = reports.createTest("Search Hotel").assignAuthor("Tshifhiwa");
         ExtentTest node = test.createNode("Validate select hotel is displayed");
@@ -78,15 +79,50 @@ public class AdactinHotelTests {
         ExtentTest node = test.createNode("Validate hotel is selected successfully");
 
         try{
-
             functions.selectHotel(webUtilities.getWebDriver(), node);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @Test(priority = 4, dataProvider = "BookHotelData", dataProviderClass = DataProviders.class)
+    public void testBookHotel(String FirstName, String LastName, String BillingAddress, String CreditCardNo, String CreditCardType,
+                              String ExpMonth, String ExpYear, String CVV){
+
+        ExtentTest test = reports.createTest("Book Hotel").assignAuthor("Tshifhiwa");
+        ExtentTest node = test.createNode("Validate hotel is booked successfully");
+
+        try{
+
+            functions.bookHotel(webUtilities.getWebDriver(),
+                    FirstName,
+                    LastName,
+                    BillingAddress,
+                    CreditCardNo,
+                    CreditCardType,
+                    ExpMonth,
+                    ExpYear,
+                    CVV,
+                    node);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
+    @Test(priority = 5)
+    public void testLogout(){
+
+        ExtentTest test = reports.createTest("Logout").assignAuthor("Tshifhiwa");
+        ExtentTest node = test.createNode("Validate Title was displayed successfully");
+
+        try{
+            functions.logOut(webUtilities.getWebDriver(), node);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     @AfterClass
     public void tearDown() throws InterruptedException {
 

@@ -6,23 +6,22 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
-public class LoginPage {
+public class LogoutPage {
 
     protected WebDriver driver;
-    public LoginPage(WebDriver driver) {
+    public LogoutPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
     }
 
-    @FindBy(xpath = "//*[@id=\"username\"]")
-    public WebElement txtUsernme;
-    @FindBy(xpath = "//*[@id=\"password\"]")
-    public WebElement txtPassword;
-    @FindBy(xpath = "//*[@id=\"login\"]")
-    public WebElement btnLogin;
+    @FindBy(xpath = "//a[text()='Logout']\n")
+    public WebElement logout;
+    @FindBy(xpath = "//a[text()='Click here to login again']\n")
+    public WebElement linkToGoLoginPage;
 
-    // validation xpath
-    @FindBy(xpath = "//*[@id=\"username_show\"]")
-    public WebElement txtWelcomeMessage;
+    //validate
+    @FindBy(xpath = "//td[@colspan='2' and @class='login_title' and text()='Existing User Login - Build 1']\n")
+    public WebElement existingUserLogin;
+
 }

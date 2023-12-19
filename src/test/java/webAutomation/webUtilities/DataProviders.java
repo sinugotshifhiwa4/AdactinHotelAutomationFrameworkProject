@@ -11,6 +11,7 @@ public class DataProviders {
     private static final String EXCEL_PATH = "C:\\Users\\sinut001\\Documents\\Automation Projects\\Automation Projects\\Web\\AdactinHotelAutomationFramework\\AdactinHotelAutomationFramework\\testData\\UserData.xlsx";
     private static final String CREDENTIALS_SHEET = "UserCredentials"; // Replace with your actual sheet name
     private static final String SEARCH_HOTEL_SHEET = "SearchHotel"; // Replace with your actual sheet name
+    private static final String BOOK_HOTEL_SHEET = "BookHotel"; // Replace with your actual sheet name
 
     @DataProvider(name = "Credentials")
     public static Object[][] getUserCredentials() throws IOException {
@@ -60,5 +61,33 @@ public class DataProviders {
         return searchHotel;
     }
 
+    @DataProvider(name = "BookHotelData")
+    public static Object[][] getBookHotelData() throws IOException {
+
+        XLUtility xlBookHotelData = new XLUtility(EXCEL_PATH);
+
+        int rowCount = xlBookHotelData.getRowCount(BOOK_HOTEL_SHEET);
+        int colCount = xlBookHotelData.getCellCount(BOOK_HOTEL_SHEET, 1);
+
+        Object[][] bookHotel;
+
+        // Check if there is only one row
+        if (rowCount == 1) {
+            bookHotel = new Object[1][colCount];
+            for (int j = 0; j < colCount; j++) {
+                bookHotel[0][j] = xlBookHotelData.getCellData(BOOK_HOTEL_SHEET, 1, j);
+            }
+        } else {
+            bookHotel = new Object[rowCount][colCount];
+            for (int i = 1; i <= rowCount; i++) {
+                for (int j = 0; j < colCount; j++) {
+                    bookHotel[i - 1][j] = xlBookHotelData.getCellData(BOOK_HOTEL_SHEET, i, j);
+                }
+            }
+        }
+
+        xlBookHotelData.close();  // Close the XLUtility to release resources
+        return bookHotel;
+    }
 
 }
