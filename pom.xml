@@ -43,6 +43,12 @@
     <profiles>
         <profile>
             <id>local</id>
+            <activation>
+                <property>
+                    <name>Platform</name>
+                    <value>local</value>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -61,6 +67,12 @@
 
         <profile>
             <id>remote</id>
+            <activation>
+                <property>
+                    <name>Platform</name>
+                    <value>remote</value>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
